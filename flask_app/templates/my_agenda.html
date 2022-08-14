@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=}, initial-scale=1.0">
+    <title>Agenda</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <nav class="navbar bg-dark text-white justify-content-between  " >
+        <h1 class="navbar mx-5">Hola, {{user.first_name}}</h1>
+            <a href="/logout" class="btn btn-outline-danger m-2 sm-0 mx-5">Cerrar Sesión</a>
+    </nav>
+
+    <main class="container">
+        <div class="d-flex justify-content-between">
+            <h3 >Aqui estan todos tus Compromisos:</h3>
+            <a href="/new/task" class="btn btn-outline-primary m-2 sm-0 mx-5">Crear nueva tarea</a>
+
+        </div>
+
+        <div class="row">
+            <div class="col-7  m-1">
+                <h2>Mis proximos compromisos</h2>
+
+                <table class="table table-bordered table-hover mx-auto rounded col-9">
+                    <thead class="table-dark">
+                        <tr class="text-center">
+                            <th >Tarea</th>
+                            <th >Fecha</th>
+                            <th >Estatus</th>
+                            <th >Acciones</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for event in events %}
+
+                            {% if event.status == 1 or event.status == 2 %}
+                        
+                                <tr class="text-center">
+                                    <td>{{event.task}}</td>
+                                    <td>{{event.date}}</td>
+                                    <td>
+                                        {% if event.status  == 1 %}
+                                            Pendiente
+                                        {% elif event.status  == 2 %}
+                                            Hecha
+                                        {% endif %}
+
+                                    </td>
+                                        
+
+                                            <td>
+                                                {% if event.status  == 1 %}
+                                                    <a href="edit/task/{{event.id}}" class="btn btn-primary">Editar</a>
+                                                    <a href="delete/task/{{event.id}}" class="btn btn-danger">Borrar</a>
+                                                {% endif %}
+                                            </td>
+            
+                                        
+                            {% endif %}
+                            
+                            {% endfor %}
+
+                                
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+            <div class="col-4  m-1">
+                <h2>Compromisos pasados  </h2>
+
+                <table class="table table-bordered table-hover mx-auto rounded col-9">
+                    <thead class="table-dark">
+                        <tr class="text-center">
+                            <th >Tarea</th>
+                            <th >Fecha</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for event in events %}
+
+                            {% if event.status == 3 %}
+                        
+                                <tr>
+                                    <td>{{event.task}}</td>
+                                    <td>{{event.date}}</td>
+                                    
+                            {% endif %}
+                            
+                        {% endfor %}
+
+                                
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+    
+    
+</body>
+</html>
